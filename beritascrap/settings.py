@@ -13,6 +13,7 @@ SPIDER_MODULES = ['beritascrap.spiders']
 NEWSPIDER_MODULE = 'beritascrap.spiders'
 COMMANDS_MODULE = 'beritascrap.commands'
 
+LOG_LEVEL = "WARNING"
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'beritascrap (+http://www.yourdomain.com)'
