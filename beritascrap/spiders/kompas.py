@@ -84,14 +84,13 @@ class KompasSpider(scrapy.Spider):
 
     def parse(self, response, **kwargs):
 
-
         if re.findall(self.re_url_article, response.url):
-            html = response.text
+            html: str = response.text
 
-            html = re.sub(r"<strong.*?/strong>", "", html)
-            html = re.sub(r"<span class=\"time-news\".*?/span>", "", html)
-            html = re.sub(r"Halaman all", "", html)
-            html = re.sub(r"\- Kompas.com", "", html)
+            html: str = re.sub(r"<strong.*?/strong>", "", html)
+            html: str = re.sub(r"<span class=\"time-news\".*?/span>", "", html)
+            html: str = re.sub(r"Halaman all", "", html)
+            html: str = re.sub(r"- Kompas.com", "", html)
 
             article = Article(response.url, language="id")
             article.download(html)
@@ -127,4 +126,3 @@ class KompasSpider(scrapy.Spider):
                 url = page_url.url
 
                 yield scrapy.Request(response.urljoin(url))
-
