@@ -1,9 +1,8 @@
+import re
 from datetime import datetime, timedelta
 
 import scrapy
 from newspaper import Article
-import re
-
 from scrapy.linkextractors.lxmlhtml import LxmlLinkExtractor
 
 from beritascrap.items import BeritaItem
@@ -29,7 +28,6 @@ class DetikNewsSpider(scrapy.Spider):
             self.start_urls.append('https://news.detik.com/indeks/?date=' + date_.strftime("%m/%d/%Y"))
 
     def parse(self, response):
-        print(response.url)
 
         if re.findall(r"detik\.com/\w+/d\-\d+/.*", response.url):
             html = response.text
@@ -37,6 +35,7 @@ class DetikNewsSpider(scrapy.Spider):
             article.download(html)
             article.parse()
             item = BeritaItem()
+            item["source"] = self.name
             item["title"] = article.title
             item["img"] = article.top_img
             item["text"] = article.text
@@ -50,16 +49,13 @@ class DetikNewsSpider(scrapy.Spider):
 
             for page_url in LxmlLinkExtractor(allow=[r"detik\.com/\w+/d\-\d+/.*"],
                                               allow_domains=self.allowed_domains).extract_links(response):
-                # print(page_url.url)
                 url = page_url.url + "?single=1"
 
                 yield scrapy.Request(response.urljoin(url))
 
             for page_url in LxmlLinkExtractor(allow=[r"detik\.com/indeks/\.*"],
                                               allow_domains=self.allowed_domains).extract_links(response):
-                # print(page_url.url)
                 url = page_url.url
-                print(url)
 
                 yield scrapy.Request(response.urljoin(url))
 
