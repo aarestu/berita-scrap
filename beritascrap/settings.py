@@ -11,6 +11,7 @@ BOT_NAME = 'beritascrap'
 
 SPIDER_MODULES = ['beritascrap.spiders']
 NEWSPIDER_MODULE = 'beritascrap.spiders'
+COMMANDS_MODULE = 'beritascrap.commands'
 
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
